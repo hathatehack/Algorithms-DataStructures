@@ -19,6 +19,33 @@ public class GenerateRandomArray {
         }
         return array;
     }
+
+    static public int[] generateRandomArrayNonRepeat(int maxSize) {
+        int size = (int)(Math.random() * maxSize) + 1;
+        int[] array = new int[size];
+        // 生成递增序列
+        for (int i = 0; i < size; i++) {
+            array[i] = i;
+        }
+        // 打乱顺序
+        for (int i = 0; i < size; i++) {
+            int swapIndex = (int)(Math.random() * size);
+            int tmp = array[swapIndex];
+            array[swapIndex] = array[i];
+            array[i] = tmp;
+        }
+        return array;
+    }
+
+    static public int[] generateRandomArrayPositive(int maxSize, int maxValue) {
+        int size = (int)(Math.random() * (maxSize + 1));  // [0, maxSize]
+        int[] array = new int[size];
+        for (int i = 0; i < size; i++) {
+            array[i] = (int)(Math.random() * (maxValue + 1)); // [0, maxValue]
+        }
+        return array;
+    }
+
     static public int[] generateRandomArraySortDistanceNoMoreK(int maxSize, int maxValue, int K) {
         int[] array = generateRandomArray(maxSize, maxValue);
         Arrays.sort(array);

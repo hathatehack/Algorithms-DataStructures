@@ -28,7 +28,7 @@ public class C02_SubarrayMaxMinDifferenceNoGreaterThanD {
     // 分析技巧：[10, 9, 8, 7], D=1
     //  1.假设[L,R)范围内max-min<=D，则必定有R-L个子数组全都符合要求！
     //  2.如果R右扩后不达标，意味着以[L,R]为前缀的子数组只会更加不达标,因为min<=curMin、max>=curMax，max-min>D !!
-    //    所有R右扩后不达标，则停止尝试L开头，应从[L+1,R)继续开始整个流程。
+    //    所以R右扩后不达标，则停止尝试L开头，应从[L+1,R)继续开始整个流程。
     public static int count(int[] array, int D) {
         if (array == null || array.length == 0 || D < 0) { // max-min不会小于0
             return 0;
