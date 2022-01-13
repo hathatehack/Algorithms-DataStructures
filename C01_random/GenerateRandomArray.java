@@ -41,7 +41,7 @@ public class GenerateRandomArray {
         int size = (int)(Math.random() * (maxSize + 1));  // [0, maxSize]
         int[] array = new int[size];
         for (int i = 0; i < size; i++) {
-            array[i] = (int)(Math.random() * (maxValue + 1)); // [0, maxValue]
+            array[i] = (int)(Math.random() * maxValue) + 1; // [1, maxValue]
         }
         return array;
     }
