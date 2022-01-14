@@ -21,8 +21,8 @@ public class C01_SlidingWindowMax {
 
     // 假设一个固定大小为W的窗口，从左到右滑过arr，返回每一次滑动窗口内最大值。
     // 例如，arr = [4,3,5,4,3,3,6,7], W = 3, 返回：[5,5,5,4,6,7]
-    // 时间复杂度O(N)
-    // 技巧分析：R只递增不回退，
+    // 分析技巧：
+    //  使用双端队列记录窗口内最大最小值，时间复杂度O(N)
     public static int[] slidingWindowMax(int[] array, int w) {
         if (array == null || w < 1 || w > array.length) {
             return null;
@@ -31,22 +31,24 @@ public class C01_SlidingWindowMax {
         int[] maxArray = new int[array.length - w + 1];
         int ansIndex = 0;
         // 孵化w窗口
-        for (int R = 0; R < w - 1; R++) {
+        for (int R = 0; R < w; R++) {
             while (!maxWindow.isEmpty() && array[maxWindow.peekLast()] <= array[R]) { // 清理窗口内<=右窗口的值的下标，减少后续窗口的重复回溯数量且保证最左对应最大/最小。
                 maxWindow.pollLast();
             }
             maxWindow.addLast(R);  // 入队新元素的下标!!
         }
-        // 滑动w窗口
-        for (int R = w - 1; R < array.length; R++) {
+        maxArray[ansIndex++] = array[maxWindow.peekFirst()];  // 结算当前窗口的max
+        // 滑动w窗口至数组末尾
+        for (int L = 0, R = w; R < array.length; L++, R++) {
+            // 窗口右滑更新
+            if (maxWindow.peekFirst() == L) {  // 窗口每次右滑一格后需弹出在左窗口之前的下标
+                maxWindow.pollFirst();
+            }
             while (!maxWindow.isEmpty() && array[maxWindow.peekLast()] <= array[R]) { // 清理窗口内<=右窗口的值的下标，减少后续窗口的重复回溯数量且保证最左对应最大/最小。
                 maxWindow.pollLast();
             }
             maxWindow.addLast(R);  // 入队新元素的下标!!
-            if (maxWindow.peekFirst() == R - w) {  // 窗口每次右滑一格后需弹出在左窗口之前的下标
-                maxWindow.pollFirst();
-            }
-            // 获取窗口每次右滑新窗口的max
+            // 结算当前窗口的max
             maxArray[ansIndex++] = array[maxWindow.peekFirst()];
         }
         return maxArray;
