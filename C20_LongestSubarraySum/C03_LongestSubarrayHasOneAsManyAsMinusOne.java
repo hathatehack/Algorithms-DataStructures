@@ -8,6 +8,7 @@ public class C03_LongestSubarrayHasOneAsManyAsMinusOne {
     // 给定一个整数组成的无序数组arr，找到1和-1数量一样多的最长子数组，返回其长度。
     // 分析技巧：
     //  1和-1数量一样多的子数组，忽略剩余的整数，那累加和就等于0.
+    // 以i位置做结尾的尝试方案， 利用preSum缓存表，时间复杂度O(N)
     public static int maxLen(int[] array) {
         if (array == null || array.length == 0) {
             return 0;
@@ -24,7 +25,7 @@ public class C03_LongestSubarrayHasOneAsManyAsMinusOne {
             // 查找前缀和
             if (preSumMap.containsKey(curSum)) {
                 maxLen = Math.max(maxLen, i - preSumMap.get(curSum));
-            } else { // 记录当前位置前缀和，但不重复记录
+            } else { // 记录当前位置前缀和，重复出现只保留最左位置
                 preSumMap.put(curSum, i);
             }
         }

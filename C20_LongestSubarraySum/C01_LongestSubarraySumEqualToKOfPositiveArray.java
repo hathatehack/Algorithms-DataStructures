@@ -6,7 +6,7 @@ public class C01_LongestSubarraySumEqualToKOfPositiveArray {
     // 给定一个正整数组成的无序数组arr和一个正整数值K，找到累加和等于K的最长子数组，返回其长度。
     // 分析技巧：
     //  以第i位置开头的正数子数组越长累加和只会越大，不可能变小，当累加和小于K就继续右扩，当累加和等于或大于K则结束i位置匹配，开始i+1位置匹配。
-    //  通过L、R、sum完成窗口不回退遍历。
+    //  有单调性，可通过L、R、preSum完成窗口不回退遍历。
     // 窗口移动，时间复杂度O(N)
     public static int longestSubarraySumEqualToK(int[] array, int K) {
         if (array == null || array.length == 0 || K <0) {
