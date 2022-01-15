@@ -46,6 +46,15 @@ public class GenerateRandomArray {
         return array;
     }
 
+    static public char[] generateRandomArrayChar(int maxSize, char start, char end) {
+        char[] array = new char[(int)(Math.random() * maxSize) + 1];
+        int range = end - start;
+        for (int i = 0; i < array.length; i++) {
+            array[i] = (char)((int)(Math.random() * range) + start);
+        }
+        return array;
+    }
+
     static public int[] generateRandomArraySortDistanceNoMoreK(int maxSize, int maxValue, int K) {
         int[] array = generateRandomArray(maxSize, maxValue);
         Arrays.sort(array);
