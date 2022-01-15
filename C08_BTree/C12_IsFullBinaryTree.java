@@ -1,7 +1,7 @@
 package C08_BTree;
 
-import C01_random.GenerateRandomBST;
-import C01_random.GenerateRandomBST.TreeNode;
+import C01_random.GenerateRandomBT;
+import C01_random.GenerateRandomBT.TreeNode;
 
 public class C12_IsFullBinaryTree {
     static public class Info {
@@ -100,7 +100,7 @@ public class C12_IsFullBinaryTree {
         int maxHeight = 4;
         int maxValue = 100;
         for (int i = 0; i < testTimes; i++) {
-            TreeNode head = GenerateRandomBST.generateRandomBST(maxHeight, maxValue);
+            TreeNode head = GenerateRandomBT.generateRandomBT(maxHeight, maxValue);
             boolean ans1 = isFull(head);
             boolean ans2 = isFull2(head);
             boolean ans3 = isFull3(head);

@@ -1,7 +1,7 @@
 package C08_BTree;
 
-import C01_random.GenerateRandomBST;
-import C01_random.GenerateRandomBST.TreeNode;
+import C01_random.GenerateRandomBT;
+import C01_random.GenerateRandomBT.TreeNode;
 
 import java.util.LinkedList;
 
@@ -92,7 +92,7 @@ public class C13_IsCompleteBinaryTree {
         int maxHeight = 4;
         int maxValue = 100;
         for (int i = 0; i < testTimes; i++) {
-            TreeNode head = GenerateRandomBST.generateRandomBST(maxHeight, maxValue);
+            TreeNode head = GenerateRandomBT.generateRandomBT(maxHeight, maxValue);
             boolean ans1 = isCBT(head);
             boolean ans2 = isCBT2(head);
             if (ans1 != ans2) {

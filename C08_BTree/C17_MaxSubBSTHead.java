@@ -1,7 +1,7 @@
 package C08_BTree;
 
-import C01_random.GenerateRandomBST;
-import C01_random.GenerateRandomBST.TreeNode;
+import C01_random.GenerateRandomBT;
+import C01_random.GenerateRandomBT.TreeNode;
 
 import java.util.ArrayList;
 
@@ -115,7 +115,7 @@ public class C17_MaxSubBSTHead {
         int maxHeight = 4;
         int maxValue = 100;
         for (int i = 0; i < testTimes; i++) {
-            TreeNode head = GenerateRandomBST.generateRandomBST(maxHeight, maxValue);
+            TreeNode head = GenerateRandomBT.generateRandomBT(maxHeight, maxValue);
             TreeNode ans1 = maxSubBSTHead(head);
             TreeNode ans2 = maxSubBSTHead2(head);
             if (ans1 != ans2) {

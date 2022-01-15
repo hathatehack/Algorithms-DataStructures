@@ -1,7 +1,7 @@
 package C08_BTree;
 
-import C01_random.GenerateRandomBST;
-import C01_random.GenerateRandomBST.TreeNode;
+import C01_random.GenerateRandomBT;
+import C01_random.GenerateRandomBT.TreeNode;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -90,8 +90,8 @@ public class C19_LowestAncestor {
         int maxHeight = 4;
         int maxValue = 100;
         for (int i = 0; i < testTimes; i++) {
-            TreeNode head = GenerateRandomBST.generateRandomBST(maxHeight, maxValue);
-            TreeNode[] random = GenerateRandomBST.pickRandom(head, 2);
+            TreeNode head = GenerateRandomBT.generateRandomBT(maxHeight, maxValue);
+            TreeNode[] random = GenerateRandomBT.pickRandom(head, 2);
             TreeNode ans1 = lowestAncestor(head, random[0], random[1]);
             TreeNode ans2 = lowestAncestor2(head, random[0], random[1]);
             if (ans1 != ans2) {

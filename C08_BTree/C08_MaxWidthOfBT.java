@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import C01_random.GenerateRandomBST;
-import C01_random.GenerateRandomBST.TreeNode;
+import C01_random.GenerateRandomBT;
+import C01_random.GenerateRandomBT.TreeNode;
 
 public class C08_MaxWidthOfBT {
     static public int maxWidth(TreeNode head) {
@@ -105,7 +105,7 @@ public class C08_MaxWidthOfBT {
         int maxValue = 100;
         int testTimes = 100000;
         for (int i = 0; i < testTimes; i++) {
-            TreeNode head = GenerateRandomBST.generateRandomBST(maxLevel, maxValue);
+            TreeNode head = GenerateRandomBT.generateRandomBT(maxLevel, maxValue);
             int ans1 = maxWidth(head);
             int ans2 = maxWidthUseMap(head);
             int ans3 = maxWidthNoMap(head);

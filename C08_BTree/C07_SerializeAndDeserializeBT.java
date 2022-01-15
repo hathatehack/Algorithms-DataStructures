@@ -3,8 +3,8 @@ package C08_BTree;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import C01_random.GenerateRandomBST;
-import C01_random.GenerateRandomBST.TreeNode;
+import C01_random.GenerateRandomBT;
+import C01_random.GenerateRandomBT.TreeNode;
 
 public class C07_SerializeAndDeserializeBT {
     /*
@@ -122,12 +122,12 @@ public class C07_SerializeAndDeserializeBT {
         int testTimes = 1000000;
         System.out.println("test begin");
         for (int i = 0; i < testTimes; i++) {
-            TreeNode head = GenerateRandomBST.generateRandomBST(maxLevel, maxValue);
+            TreeNode head = GenerateRandomBT.generateRandomBT(maxLevel, maxValue);
             Queue<String> pre = PreOrder.serialize(head);
             Queue<String> level = LevelOrder.serialize(head);
             TreeNode preBuild = PreOrder.deserialize(pre);
             TreeNode levelBuild = LevelOrder.deserialize(level);
-            if (!GenerateRandomBST.isSameValueStructure(preBuild, levelBuild)) {
+            if (!GenerateRandomBT.isSameValueStructure(preBuild, levelBuild)) {
                 System.out.println("Oops!");
             }
         }

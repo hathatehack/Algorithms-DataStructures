@@ -1,6 +1,6 @@
 package C08_BTree;
 
-import C01_random.GenerateRandomBST.TreeNode;
+import C01_random.GenerateRandomBT.TreeNode;
 
 public class C18_MaxDistance {
     static public class Info {

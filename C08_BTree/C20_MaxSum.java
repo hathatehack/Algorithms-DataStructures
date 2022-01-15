@@ -1,7 +1,7 @@
 package C08_BTree;
 
-import C01_random.GenerateRandomBST;
-import C01_random.GenerateRandomBST.TreeNode;
+import C01_random.GenerateRandomBT;
+import C01_random.GenerateRandomBT.TreeNode;
 
 public class C20_MaxSum {
     static public class Info {
@@ -70,7 +70,7 @@ public class C20_MaxSum {
         int maxHeight = 4;
         int maxValue = 100;
         for (int i = 0; i < testTimes; i++) {
-            TreeNode head = GenerateRandomBST.generateRandomBST(maxHeight, maxValue);
+            TreeNode head = GenerateRandomBT.generateRandomBT(maxHeight, maxValue);
             int ans1 = maxSum(head);
             int ans2 = maxSum2(head);
             if (ans1 != ans2) {
