@@ -21,12 +21,15 @@ public class C10_IsSameTree {
     }
 
     static public boolean isSameTree(TreeNode n1, TreeNode n2) {
-        if (n1 == null ^ n2 == null) {
-            return false;
-        }
-        if (n1 == null && n2 == null) {
+        if (n1 == null && n2 == null) {  // 两树都为空，则相等
             return true;
         }
-         return n1.value == n1.value && isSameTree(n1.left, n2.left) && isSameTree(n1.right, n2.right);
+        if (n1 == null ^ n2 == null) {  // 有一颗树为空，则不相等
+            return false;
+        }
+        // 比较两棵树的头节点值、左节点值、右节点值
+         return n1.value == n2.value &&
+                 isSameTree(n1.left, n2.left) &&
+                 isSameTree(n1.right, n2.right);
     }
 }

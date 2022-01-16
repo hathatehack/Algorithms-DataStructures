@@ -2,31 +2,33 @@ package C16_KMP;
 
 import C01_random.GenerateRandomArray;
 
-public class C01_KMP {
+public class C01_IndexOf {
     // 返回string中第一个match的起始位置。
     // KMP，时间复杂度O(N)
     public static int indexOf(String string, String match) {
-        if (string == null || match == null || match.length() == 0 || match.length() > string.length()) {
+        if (string == null || match == null || match.length() > string.length()) {
             return -1;
+        } else if (match.equals("")) {
+            return 0;
         }
         char[] s = string.toCharArray();
         char[] m = match.toCharArray();
-        int[] nextInMatch = getNextArray(m);  // 生成match字符串的前缀表
+        int[] preNext = generatePreNextArray(m);  // 生成match字符串的前缀匹配表
         int sIndex = 0;
         int mIndex = 0;
         while (sIndex < s.length && mIndex < m.length) {  // 找到一个match即可
             if (s[sIndex] == m[mIndex]) {
                 sIndex++;
                 mIndex++;
-            } else if (nextInMatch[mIndex] > -1) {  //
-                mIndex = nextInMatch[mIndex];
+            } else if (preNext[mIndex] > -1) {
+                mIndex = preNext[mIndex];  // 尝试用m[0,mIndex)内与后缀串相同的前缀串去接着匹配string
             } else {  // s[sIndex]和match的首字符都不相等，那sIndex++
                 sIndex++;
             }
         }
         return mIndex == m.length ? sIndex - mIndex : -1;
     }
-    private static int[] getNextArray(char[] chars) {
+    private static int[] generatePreNextArray(char[] chars) {
         if (chars.length == 1) {
             return new int[] {-1};
         }
@@ -34,21 +36,21 @@ public class C01_KMP {
         // ---  ---
         // ---        ---
         // ---             ---
-        int[] next = new int[chars.length];  //  开头到每个位置内，与后缀串相同的前缀串结束位置。。。。。每个位置匹配失败后往前找最可能的匹配位置
-        next[0] = -1;  // 0位置不匹配没有再前位置
-        next[1] = 0;   // 1位置不匹配只能去0位置从头开始匹配
-        int matchedIndex = 0; // 已经匹配到哪里 ？？？？？
+        int[] preNext = new int[chars.length];  // 在每个位置记录前个子串内与后缀串相同的最长前缀串结束位置（开区间）
+        preNext[0] = -1;  // 0位置前不可达
+        preNext[1] = 0;   // 1位置不匹配只能去0位置从头开始匹配
+        int matchIndex = 0;  // 前缀串待匹配位置
         int i = 2;
         while (i < chars.length) {
-            if (chars[i - 1] == chars[matchedIndex]) {
-                next[i++] = ++matchedIndex;  // 记录i位置左边前缀结束位置
-            } else if (matchedIndex > 0) {  // 左边有相同前缀
-                matchedIndex = next[matchedIndex];
+            if (chars[i - 1] == chars[matchIndex]) {  // 前个子串存在相同的后缀串和前缀串
+                preNext[i++] = ++matchIndex;  // 在当前位置记录前个子串的相应前缀串结束位置（开区间），当i位置与目标字符串匹配失败后可以从该前缀后面接着匹配，而不需要完全从头匹配
+            } else if (matchIndex > 0) {
+                matchIndex = preNext[matchIndex];  // 尝试前个子串的相应前缀串后面接着匹配
             } else {
-                next[i++] = 0;
+                preNext[i++] = 0;  // 前个子串不存在相应的前缀串，只能从头开始匹配
             }
         }
-        return next;
+        return preNext;
     }
 
 

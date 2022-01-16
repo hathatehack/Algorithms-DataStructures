@@ -12,16 +12,17 @@ public class C07_SerializeAndDeserializeBT {
      * 但是，二叉树无法通过中序遍历的方式实现序列化和反序列化
      * 因为不同的两棵树，可能得到同样的中序序列，即便补了空位置也可能一样。
      * 比如如下两棵树
-     *         __2
-     *        /
-     *       1
+     *       2
+     *     /   \
+     *    1
      *       和
-     *       1__
-     *          \
-     *           2
+     *       1
+     *     /   \
+     *          2
      * 补足空位置的中序遍历结果都是{ null, 1, null, 2, null}
      *
      * */
+    // DFS
     static public class PreOrder {
         static public Queue<String> serialize(TreeNode head) {
             Queue<String> queue = new LinkedList<>();
@@ -60,6 +61,8 @@ public class C07_SerializeAndDeserializeBT {
     static public class PostOrder {
     }
 
+
+    // BFS
     static public class LevelOrder {
         static public Queue<String> serialize(TreeNode head) {
             Queue<String> serial = new LinkedList<>();
