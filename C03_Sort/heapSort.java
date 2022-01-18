@@ -1,7 +1,6 @@
 package C03_Sort;
 
 import C01_random.GenerateRandomArray;
-
 import java.util.Arrays;
 
 public class heapSort {
@@ -10,21 +9,22 @@ public class heapSort {
         int maxSize = 100;
         int maxValue = 100;
         for (int i = 0; i < testTime; i++) {
-            int[] arr1 = GenerateRandomArray.generateRandomArray(maxSize, maxValue);
-            int[] arr2 = GenerateRandomArray.copyArray(arr1);
+            int[] arr = GenerateRandomArray.generateRandomArray(maxSize, maxValue);
+            int[] arr1 = GenerateRandomArray.copyArray(arr);
+            int[] arr2 = GenerateRandomArray.copyArray(arr);
 //            GenerateRandomArray.printArray(arr1);
             heapSort(arr1);
             Arrays.sort(arr2);
             if (!GenerateRandomArray.isEqual(arr1, arr2)) {
-                System.out.format("%d出错了！\n", i);
-                GenerateRandomArray.printArray(arr1);
-                GenerateRandomArray.printArray(arr2);
-                break;
+                System.out.format("Oops! i=%d\n", i);
+                System.out.print("array: "); GenerateRandomArray.printArray(arr);
+                System.out.print("ans1: "); GenerateRandomArray.printArray(arr1);
+                System.out.print("ans2: "); GenerateRandomArray.printArray(arr2);
             }
         }
     }
 
-    // O(N*logN)
+    // O(N + N*logN)
     static public void heapSort(int[] array) {
         if (array == null || array.length <= 1) {
             return;
@@ -38,16 +38,16 @@ public class heapSort {
         for (int i = array.length - 1; i >= 0; i--) {
             heapify(array, i, array.length);
         }
-        // 2.进行N次首尾交换，大值置于末尾。
+        // 2.进行N次堆首尾交换，大值置于末尾。
         int heapSize = array.length;
-        swap(array, 0, --heapSize);
+        swap(array, 0, --heapSize);  // 弹出max置于数组末尾
         while (heapSize > 1) {
             heapify(array, 0, heapSize);  // O(logN)
             swap(array, 0, --heapSize);   // O(1)
         }
     }
 
-    // 从尾向头遍历
+    // 大根堆化，从尾向头调整
     static public void heapInsert(int[] array, int index) {
         // 比父节点大则停、移动到0位置则停
         while (array[index] > array[(index - 1) / 2]) {  // index-1为负数时不能>>1只能/2
@@ -56,9 +56,9 @@ public class heapSort {
         }
     }
 
-    // 从头向尾遍历
+    // 大根堆化，从头向尾调整
     static public void heapify(int[] array, int index, int heapSize) {
-        int left = (index << 1) + 1;
+        int left = (index << 1) + 1;  // array[index]的左节点位置
         while (left < heapSize) {  // 先判断是否存在左孩子，后面得再判断是否存在右孩子!
             int largest = left + 1 < heapSize && array[left + 1] > array[left] ? left + 1 : left;
             largest = array[largest] > array[index] ? largest : index;
