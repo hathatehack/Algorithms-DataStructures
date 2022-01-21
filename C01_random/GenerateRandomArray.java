@@ -86,6 +86,21 @@ public class GenerateRandomArray {
         return lines;
     }
 
+    static public int[][] generateRandomLinesPositive(int maxSize, int maxValue) {
+        int size = (int)(Math.random() * (maxSize + 1));  // [0, maxSize]
+        int[][] lines = new int[size][2];
+        for (int i = 0; i < size; i++) {
+            int a = (int)(Math.random() * (maxValue + 1));  // [0, maxValue]
+            int b = (int)(Math.random() * (maxValue + 1));  // [0, maxValue]
+            if (a == b) {
+                b++;
+            }
+            lines[i][0] = Math.min(a, b);
+            lines[i][1] = Math.max(a, b);
+        }
+        return lines;
+    }
+
 
 
 
@@ -141,7 +156,7 @@ public class GenerateRandomArray {
             return;
         }
         for (int i = 0; i < arr.length; i++) {
-            System.out.format("%s ", arr[i]);
+            System.out.format("%s, ", arr[i]);
         }
         System.out.println();
     }

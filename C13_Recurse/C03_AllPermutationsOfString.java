@@ -30,20 +30,23 @@ public class C03_AllPermutationsOfString {
         process(string.toCharArray(), 0, all);
         return all;
     }
-
-    private static void process(char[] str, int index, List<String> all) {
-        if (index == str.length) {
-            all.add(String.valueOf(str));
+    // chars为所有字符，startIndex为开始处理位置，将所有排列组合记录到all
+    private static void process(char[] chars, int startIndex, List<String> all) {
+        if (startIndex == chars.length) {
+            all.add(String.valueOf(chars));
             return;
         }
-        for (int i = index; i < str.length; i++) {
-            swap(str, index, i);
-            process(str, index + 1, all);
-            swap(str, index, i);
+        // 轮流将startIndex到结束位置的每个字符做开头
+        for (int i = startIndex; i < chars.length; i++) {
+            swap(chars, startIndex, i);  // i位置的字符做开头
+            process(chars, startIndex + 1, all);
+            swap(chars, startIndex, i);  // 恢复
         }
     }
 
     private static void swap(char[] array, int i, int j) {
+        if (i == j)
+            return;
         char tmp = array[i];
         array[i] = array[j];
         array[j] = tmp;
@@ -64,7 +67,7 @@ public class C03_AllPermutationsOfString {
         process2("", rest, all);
         return all;
     }
-
+    // path为已排列串，rest为剩余待排列字符，将rest的全部排列组合追加到path后面并记录到all
     private static void process2(String path, List<Character> rest, List<String> all) {
         if (rest.isEmpty()) {
             all.add(path);
