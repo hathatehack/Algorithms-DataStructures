@@ -55,6 +55,21 @@ public class GenerateRandomArray {
         return array;
     }
 
+    static public char[][] generateRandomMatrixChar(int maxRow, int minRow, int maxCol, int minCol, char start, char end) {
+        int rowRange = maxRow - minRow + 1;
+        int colRange = maxCol - minCol + 1;
+        char[][] matrix = new char[minRow + (int)(Math.random() * rowRange)][minCol + (int)(Math.random() * colRange)];
+        int range = end - start + 1;
+        for (int r = matrix.length - 1; r >= 0; r--) {
+            for (int c = matrix[0].length - 1; c >= 0; c--)
+                matrix[r][c] = (char)((int)(Math.random() * range) + start);  // [start, end]
+        }
+        return matrix;
+    }
+    static public char[][] generateRandomMatrixChar(int maxRow, int maxCol, char start, char end) {
+        return generateRandomMatrixChar(maxRow, 0, maxCol, 0, start, end);
+    }
+
     static public int[] generateRandomArraySortDistanceNoMoreK(int maxSize, int maxValue, int K) {
         int[] array = generateRandomArray(maxSize, maxValue);
         Arrays.sort(array);
@@ -120,11 +135,28 @@ public class GenerateRandomArray {
         if (arr == null) {
             return null;
         }
-        int[][] res = new int[arr.length][];
-        for (int i = 0; i < arr.length; i++) {
-            res[i] = arr[i];
+        int row = arr.length;
+        int col = arr[0].length;
+        int[][] copy = new int[arr.length][col];
+        for (int r = row - 1; r >= 0; r--) {
+            for (int c = col - 1; c >= 0; c--)
+                copy[r][c] = arr[r][c];
         }
-        return res;
+        return copy;
+    }
+
+    static public char[][] copyArray(char[][] arr){
+        if (arr == null) {
+            return null;
+        }
+        int row = arr.length;
+        int col = arr[0].length;
+        char[][] copy = new char[arr.length][col];
+        for (int r = row - 1; r >= 0; r--) {
+            for (int c = col - 1; c >= 0; c--)
+                copy[r][c] = arr[r][c];
+        }
+        return copy;
     }
 
     static public boolean isEqual(int[] array1, int[] array2) {
