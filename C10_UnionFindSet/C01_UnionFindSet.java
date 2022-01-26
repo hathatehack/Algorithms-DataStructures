@@ -3,6 +3,7 @@ package C10_UnionFindSet;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 public class C01_UnionFindSet {
     // 并查集（HashMap实现）
@@ -21,7 +22,7 @@ public class C01_UnionFindSet {
             nodesPath = new LinkedList<>();
         }
 
-        private T findParent(T node) {
+        public T findParent(T node) {
             T parent;
             while (node != (parent = parentMap.get(node))) {
                 nodesPath.push(node);
@@ -64,6 +65,10 @@ public class C01_UnionFindSet {
         public int size() {
             return sizeMap.size();
         }
+
+        public Set<T> set() {
+            return sizeMap.keySet();
+        }
     }
 
 
@@ -86,7 +91,7 @@ public class C01_UnionFindSet {
             size = N;
         }
 
-        private int findParent(int node) {
+        public int findParent(int node) {
             int parent;
             int i = -1;
             while (node != (parent = parentMap[node])) {

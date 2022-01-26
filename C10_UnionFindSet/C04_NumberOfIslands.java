@@ -4,27 +4,27 @@ import java.util.LinkedList;
 import C01_random.GenerateRandomArray;
 import C10_UnionFindSet.C01_UnionFindSet.UnionFindSet;
 
-public class C03_NumberOfIslands {
+public class C04_NumberOfIslands {
     // 测试链接：https://leetcode.com/problems/number-of-islands
-    // 给定一个二维数组matrix，里面的值不是1就是0，上、下、左、右相邻的1认为是一片岛，返回matrix中岛的数量。
+    // 给定一个二维数组board，里面的值不是1就是0，上、下、左、右相邻的1认为是一片岛，返回board中岛的数量。
     // 递归感染法，时间复杂度O(N)
-    public static int numberOfIslands(char[][] matrix) {
-        matrix = GenerateRandomArray.copyArray(matrix);
+    public static int numberOfIslands(char[][] board) {
+        board = GenerateRandomArray.copyArray(board);
         int islands = 0;
         // 遍历所有节点，尝试感染周围节点
-        int row = matrix.length;
-        int col = matrix[0].length;
+        int row = board.length;
+        int col = board[0].length;
         for (int r = row - 1; r >= 0; r--) {
             for (int c = col - 1; c >= 0; c--) {
-                if (matrix[r][c] == '1') {
-                    inflect(matrix, r, c);
+                if (board[r][c] == '1') {
+                    inflect(board, r, c);
                     islands++;
                 }
             }
         }
         return islands;
     }
-    // 尝试把matrix[row][col]节点及其上下左右为'1'的节点感染为2，被感染节点继续感染其上下左右，所以每个节点会进入5次。
+    // 尝试把board[row][col]节点及其上下左右为'1'的节点感染为2，被感染节点继续感染其上下左右，所以每个节点会进入5次。
     private static void inflect(char[][] matrix, int row, int col) {
         if (row < 0 || row >= matrix.length ||
                 col < 0 || col >= matrix.length ||
@@ -44,29 +44,29 @@ public class C03_NumberOfIslands {
 
 
     // 并查集（数组实现），时间复杂度O(N)，常数时间较大
-    public static int numberOfIslands2(char[][] matrix) {
-        int row = matrix.length;
-        int col = matrix[0].length;
-        UnionFindSet2 ufs = new UnionFindSet2(matrix);
+    public static int numberOfIslands2(char[][] board) {
+        int row = board.length;
+        int col = board[0].length;
+        UnionFindSet2 ufs = new UnionFindSet2(board);
         // 单独处理第一行，每个节点看能否与左边节点合并
         for (int c = col - 1; c >= 1; c--) {
-            if (matrix[0][c - 1] == '1' && matrix[0][c] == '1') {
+            if (board[0][c - 1] == '1' && board[0][c] == '1') {
                 ufs.union(0, c - 1, 0, c);
             }
         }
         // 单独处理第一列，每个节点看能否与上边节点合并
         for (int r = row - 1; r >= 1; r--) {
-            if (matrix[r - 1][0] == '1' && matrix[r][0] == '1') {
+            if (board[r - 1][0] == '1' && board[r][0] == '1') {
                 ufs.union(r - 1, 0, r, 0);
             }
         }
         // 处理剩余节点，每个节点同时看能否与上边节点、左边节点合并
         for (int r = row - 1; r >= 1; r--) {
             for (int c = col - 1; c >= 1; c--) {
-                if (matrix[r - 1][c] == '1' && matrix[r][c] == '1') {
+                if (board[r - 1][c] == '1' && board[r][c] == '1') {
                     ufs.union(r - 1, c, r, c);
                 }
-                if (matrix[r][c - 1] == '1' && matrix[r][c] == '1') {
+                if (board[r][c - 1] == '1' && board[r][c] == '1') {
                     ufs.union(r, c - 1, r, c);
                 }
             }
@@ -145,38 +145,38 @@ public class C03_NumberOfIslands {
 
 
     // 并查集（HashMap实现），时间复杂度O(N)，常数时间很大
-    public static int numberOfIslands3(char[][] matrix) {
+    public static int numberOfIslands3(char[][] board) {
         // 找出所有为'1'的节点，添加序号到并查集
         LinkedList<Integer> nodes = new LinkedList<>();
-        int row = matrix.length;
-        int col = matrix[0].length;
-        for (int i = row - 1; i >= 0; i--) {
-            for (int j = col - 1; j >= 0; j--) {
-                if (matrix[i][j] == '1') {
-                    nodes.addLast(i * col + j);
+        int row = board.length;
+        int col = board[0].length;
+        for (int r = row - 1; r >= 0; r--) {
+            for (int c = col - 1; c >= 0; c--) {
+                if (board[r][c] == '1') {
+                    nodes.addLast(r * col + c);
                 }
             }
         }
         UnionFindSet<Integer> ufs = new UnionFindSet<>(nodes);
         // 单独处理第一行，每个节点看能否与左边节点合并
         for (int c = col - 1; c >= 1; c--) {
-            if (matrix[0][c - 1] == '1' && matrix[0][c] == '1') {
+            if (board[0][c - 1] == '1' && board[0][c] == '1') {
                 ufs.union(c - 1, c);
             }
         }
         // 单独处理第一列，每个节点看能否与上边节点合并
         for (int r = row - 1; r >= 1; r--) {
-            if (matrix[r - 1][0] == '1' && matrix[r][0] == '1') {
+            if (board[r - 1][0] == '1' && board[r][0] == '1') {
                 ufs.union((r - 1) * col, r * col);
             }
         }
         // 处理剩余节点，每个节点同时看能否与上边节点、左边节点合并
         for (int r = row - 1; r >= 1; r--) {
             for (int c = col - 1; c >= 1; c--) {
-                if (matrix[r - 1][c] == '1' && matrix[r][c] == '1') {
+                if (board[r - 1][c] == '1' && board[r][c] == '1') {
                     ufs.union((r - 1) * col + c, r * col + c);
                 }
-                if (matrix[r][c - 1] == '1' && matrix[r][c] == '1') {
+                if (board[r][c - 1] == '1' && board[r][c] == '1') {
                     ufs.union(r * col + c - 1, r * col + c);
                 }
             }
@@ -196,19 +196,23 @@ public class C03_NumberOfIslands {
             int row = rows[i];
             int col = cols[i];
             char[][] matrix = GenerateRandomArray.generateRandomMatrixChar(row, col, row, col, '0', '1');
-            System.out.printf("matrix规模：%d*%d\n", row, col);
+            int ans;
+            System.out.printf("board规模：%d*%d\n", row, col);
+
             startTime = System.currentTimeMillis();
-            System.out.printf("递归感染法的运行结果       ：%d\n", numberOfIslands(matrix));
+            ans = numberOfIslands(matrix);
             endTime = System.currentTimeMillis();
-            System.out.printf("递归感染法的运行时间       ：%dms\n", endTime - startTime);
+            System.out.printf("递归感染法的运行结果      ：%- 10d 运行时间： %dms\n", ans, endTime - startTime);
+
             startTime = System.currentTimeMillis();
-            System.out.printf("并查集（数组实现）的运行结果：%d\n", numberOfIslands2(matrix));
+            ans = numberOfIslands2(matrix);
             endTime = System.currentTimeMillis();
-            System.out.printf("并查集（数组实现）的运行时间：%dms\n", endTime - startTime);
+            System.out.printf("并查集(数组实现)的运行结果：%- 10d 运行时间： %dms\n", ans, endTime - startTime);
+
             startTime = System.currentTimeMillis();
-            System.out.printf("并查集（Map实现） 的运行结果：%d\n", numberOfIslands3(matrix));
+            ans = numberOfIslands3(matrix);
             endTime = System.currentTimeMillis();
-            System.out.printf("并查集（Map实现） 的运行时间：%dms\n\n", endTime - startTime);
+            System.out.printf("并查集(Map实现)的运行结果 ：%- 10d 运行时间： %dms\n\n", ans, endTime - startTime);
         }
     }
 }

@@ -1,6 +1,6 @@
 package C10_UnionFindSet;
 
-public class C02_FriendCircles {
+public class C03_FriendCircles {
     // 测试链接：https://leetcode.com/problems/friend-circles
     // 给定一个行列数相等的二维数组matrix，里面的值不是1就是0，表示一群人中任意两个人认识或不认识，返回共有几个无关系的圈子。
     public static int friendCircles(int[][] matrix) {

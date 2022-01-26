@@ -55,6 +55,20 @@ public class GenerateRandomArray {
         return array;
     }
 
+    static public int[][] generateRandomMatrixPositive(int maxRow, int minRow, int maxCol, int minCol, int maxValue) {
+        int rowRange = maxRow - minRow + 1;
+        int colRange = maxCol - minCol + 1;
+        int[][] matrix = new int[minRow + (int)(Math.random() * rowRange)][minCol + (int)(Math.random() * colRange)];
+        for (int r = matrix.length - 1; r >= 0; r--) {
+            for (int c = matrix[0].length - 1; c >= 0; c--)
+                matrix[r][c] = (char)((int)(Math.random() * (maxValue + 1)));  // [0, maxValue]
+        }
+        return matrix;
+    }
+    static public int[][] generateRandomMatrixPositive(int maxRow, int maxCol, int maxValue) {
+        return generateRandomMatrixPositive(maxRow, 0, maxCol, 0, maxValue);
+    }
+
     static public char[][] generateRandomMatrixChar(int maxRow, int minRow, int maxCol, int minCol, char start, char end) {
         int rowRange = maxRow - minRow + 1;
         int colRange = maxCol - minCol + 1;
@@ -137,7 +151,7 @@ public class GenerateRandomArray {
         }
         int row = arr.length;
         int col = arr[0].length;
-        int[][] copy = new int[arr.length][col];
+        int[][] copy = new int[row][col];
         for (int r = row - 1; r >= 0; r--) {
             for (int c = col - 1; c >= 0; c--)
                 copy[r][c] = arr[r][c];
@@ -151,10 +165,24 @@ public class GenerateRandomArray {
         }
         int row = arr.length;
         int col = arr[0].length;
-        char[][] copy = new char[arr.length][col];
+        char[][] copy = new char[row][col];
         for (int r = row - 1; r >= 0; r--) {
             for (int c = col - 1; c >= 0; c--)
                 copy[r][c] = arr[r][c];
+        }
+        return copy;
+    }
+
+    static public char[][] copyArray(char[][] arr, int startRow, int endRow, int startCol, int endCol){
+        if (arr == null) {
+            return null;
+        }
+        int row = endRow - startRow + 1;
+        int col = endCol - startCol + 1;
+        char[][] copy = new char[row][col];
+        for (int r = row - 1; r >= 0; r--) {
+            for (int c = col - 1; c >= 0; c--)
+                copy[r][c] = arr[startRow + r][startCol + c];
         }
         return copy;
     }
