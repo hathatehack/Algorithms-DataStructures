@@ -42,6 +42,11 @@ public class C01_Graph {
             to = _to;
             weight = 0;
         }
+
+        @Override
+        public String toString() {
+            return from + "->" + to + "#" + weight;
+        }
     }
 
     public static class Graph<T> {

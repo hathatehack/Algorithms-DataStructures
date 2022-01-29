@@ -1,9 +1,6 @@
 package C10_UnionFindSet;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class C01_UnionFindSet {
     // 并查集（HashMap实现）
@@ -12,7 +9,7 @@ public class C01_UnionFindSet {
         private HashMap<T, T> parentMap;  // 每个节点及其父亲的映射
         private LinkedList<T> nodesPath;  // 寻父过程记录沿途节点
 
-        public UnionFindSet(List<T> nodes) {
+        public UnionFindSet(Collection<T> nodes) {
             sizeMap = new HashMap<>();
             parentMap = new HashMap<>();
             for (T node : nodes) {
