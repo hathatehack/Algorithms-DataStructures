@@ -21,7 +21,7 @@ public class C09_PrimMST {
                     minEdgeHeap.add(edge);
                 }
             }
-            // 先选权重小的边
+            // 先选权重小的边（贪心）
             while (!minEdgeHeap.isEmpty()) {
                 Edge edge = minEdgeHeap.poll();
                 Node n = edge.to;
@@ -54,7 +54,7 @@ public class C09_PrimMST {
             int minWeight = Integer.MAX_VALUE;
             int minTo = -1;
             for (int i = size - 1; i >= 0; i--) {
-                // 选一条from节点的最小权值边
+                // 选一条from节点的最小权值边（贪心）
                 if (!visited[i] && weights[i][0] < minWeight) {
                     minWeight = weights[i][0];
                     minTo = i;

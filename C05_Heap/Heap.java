@@ -4,6 +4,123 @@ import java.util.PriorityQueue;
 
 // 堆是一种CBT/完全二叉树。堆是弱序的（只保证根到叶的每一条路径内有序），不支持直接按序遍历，但可以快速移除根节点、插入新节点。
 public class Heap {
+    static public abstract class _Heap {
+        protected int[] heap;  // 存放堆元素的结构
+        protected final int limit;  // 堆容量
+        protected int heapSize;  // 已添加多少堆元素
+
+        public _Heap(int limit) {
+            heap = new int[limit];
+            this.limit = limit;
+            heapSize = 0;
+        }
+
+        public boolean isEmpty() {
+            return heapSize == 0;
+        }
+
+        public boolean isFull() {
+            return heapSize == limit;
+        }
+
+        public void push(int value) {
+            heap[heapSize] = value;
+            insertHeapify(heapSize++);
+        }
+
+        public int pop() {
+            int root = heap[0];
+            swap(0, --heapSize);
+            heapify(0);
+            return root;
+        }
+
+        public int peek() {
+            return heap[0];
+        }
+
+        protected void insertHeapify(int index) {
+            throw new RuntimeException("heapInsert() doesn't be implemented!");
+        }
+
+        protected void heapify(int index) {
+            throw new RuntimeException("heapify() doesn't be implemented!");
+        }
+
+        protected void swap(int i, int j) {
+            int tmp = heap[i];
+            heap[i] = heap[j];
+            heap[j] = tmp;
+        }
+    }
+
+
+    // 小根堆
+    static public class MinHeap extends _Heap {
+        public MinHeap(int limit) {
+            super(limit);
+        }
+
+        // 从尾向头遍历
+        protected void insertHeapify(int index) {
+            // 比父节点大则停、移动到0位置则停
+            while (heap[index] < heap[(index - 1) / 2]) {  // index-1为负数时不能>>1只能/2
+                swap(index, (index - 1) / 2);
+                index = (index - 1) / 2;
+            }
+        }
+
+        // 从头向尾遍历
+        protected void heapify(int index) {
+            int left = (index << 1) + 1;
+            while (left < heapSize) {  // 先判断是否存在左孩子，再判断是否存在右孩子！再在头左右节点选出最小节点
+                int least = (left + 1 < heapSize) && (heap[left + 1] < heap[left]) ? left + 1 : left;
+                least = heap[least] < heap[index] ? least : index;
+                if (least == index) {
+                    break;
+                }
+                swap(least, index);
+                index = least;
+                left = (index << 1) + 1;
+            }
+        }
+    }
+
+
+
+    // 大根堆
+    static public class MaxHeap extends _Heap {
+        public MaxHeap(int limit) {
+            super(limit);
+        }
+
+        // 从尾向头遍历
+        protected void insertHeapify(int index) {
+            // 比父节点小则停、移动到0位置则停
+            while (heap[index] > heap[(index - 1) / 2]) {  // index-1为负数时不能>>1只能/2
+                swap(index, (index - 1) / 2);
+                index = (index - 1) / 2;
+            }
+        }
+
+        // 从头向尾遍历
+        protected void heapify(int index) {
+            int left = (index << 1) + 1;
+            while (left < heapSize) {  // 先判断是否存在左孩子，再判断是否存在右孩子！再在头左右节点选出最大节点
+                int largest = (left + 1 < heapSize) && (heap[left + 1] > heap[left]) ? left + 1 : left;
+                largest = heap[largest] > heap[index] ? largest : index;
+                if (largest == index) {
+                    break;
+                }
+                swap(index, largest);
+                index = largest;
+                left = (index << 1) + 1;
+            }
+        }
+    }
+
+
+
     static public void main(String[] args) {
         int testTimes = 100;
         int limit = 100;
@@ -48,121 +165,6 @@ public class Heap {
                         }
                     }
                 }
-            }
-        }
-    }
-
-    static public abstract class _Heap {
-        protected int[] heap;
-        protected final int limit;
-        protected int heapSize;
-
-        public _Heap(int limit) {
-            heap = new int[limit];
-            this.limit = limit;
-            heapSize = 0;
-        }
-
-        public boolean isEmpty() {
-            return heapSize == 0;
-        }
-
-        public boolean isFull() {
-            return heapSize == limit;
-        }
-
-        public void push(int value) {
-            heap[heapSize] = value;
-            heapInsert(heapSize++);
-        }
-
-        public int pop() {
-            int root = heap[0];
-            swap(0, --heapSize);
-            heapify(0);
-            return root;
-        }
-
-        public int peek() {
-            return heap[0];
-        }
-
-        protected void heapInsert(int index) {
-            throw new RuntimeException("heapInsert() doesn't be implemented!");
-        }
-
-        protected void heapify(int index) {
-            throw new RuntimeException("heapify() doesn't be implemented!");
-        }
-
-        protected void swap(int i, int j) {
-            int tmp = heap[i];
-            heap[i] = heap[j];
-            heap[j] = tmp;
-        }
-    }
-
-
-    // 小根堆
-    static public class MinHeap extends _Heap {
-        public MinHeap(int limit) {
-            super(limit);
-        }
-
-        // 从尾向头遍历
-        protected void heapInsert(int index) {
-            // 比父节点大则停、移动到0位置则停
-            while (heap[index] < heap[(index - 1) / 2]) {  // index-1为负数时不能>>1只能/2
-                swap(index, (index - 1) / 2);
-                index = (index - 1) / 2;
-            }
-        }
-
-        // 从头向尾遍历
-        protected void heapify(int index) {
-            int left = (index << 1) + 1;
-            while (left < heapSize) {  // 先判断是否存在左孩子，后面得再判断是否存在右孩子!
-                int least = (left + 1 < heapSize) && (heap[left + 1] < heap[left]) ? left + 1 : left;
-                least = heap[least] < heap[index] ? least : index;
-                if (least == index) {
-                    break;
-                }
-                swap(least, index);
-                index = least;
-                left = (index << 1) + 1;
-            }
-        }
-    }
-
-
-
-    // 大根堆
-    static public class MaxHeap extends _Heap {
-        public MaxHeap(int limit) {
-            super(limit);
-        }
-
-        // 从尾向头遍历
-        protected void heapInsert(int index) {
-            // 比父节点小则停、移动到0位置则停
-            while (heap[index] > heap[(index - 1) / 2]) {  // index-1为负数时不能>>1只能/2
-                swap(index, (index - 1) / 2);
-                index = (index - 1) / 2;
-            }
-        }
-
-        // 从头向尾遍历
-        protected void heapify(int index) {
-            int left = (index << 1) + 1;
-            while (left < heapSize) {  // 先判断是否存在左孩子，后面得再判断是否存在右孩子!
-                int largest = (left + 1 < heapSize) && (heap[left + 1] > heap[left]) ? left + 1 : left;
-                largest = heap[largest] > heap[index] ? largest : index;
-                if (largest == index) {
-                    break;
-                }
-                swap(index, largest);
-                index = largest;
-                left = (index << 1) + 1;
             }
         }
     }

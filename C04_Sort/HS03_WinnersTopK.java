@@ -83,9 +83,9 @@ public class HS03_WinnersTopK {
                         candidates.push(c);
                     }
                 } else if (candidates.contains(c)) { // 更新heap
-                    candidates.resign(c);
+                    candidates.reHeapify(c);
                 } else if (winners.contains(c)) { // 更新heap
-                    winners.resign(c);
+                    winners.reHeapify(c);
                 }
                 // 重新选择中奖区
                 reselect(candidates, winners, topK, i);

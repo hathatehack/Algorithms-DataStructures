@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.Consumer;
 
-// 堆是一种CBT/完全二叉树。堆是弱序的（只保证根到叶的每一条路径内有序），不支持直接按序遍历，但可以快速移除根节点、插入新节点。
-// 默认小根堆
+// 堆是一种CBT/完全二叉树。堆是弱序的（只保证根到叶的每一条路径内有序），不支持直接按序遍历，但可以快速移除根节点、尾插新节点。
+// 加强堆除了支持push、pop、peek操作，还支持删除、更新操作。默认为小根堆。
 public class HeapEnhance<T> {
-    private ArrayList<T> heap = new ArrayList<>();
-    private HashMap<T, Integer> indexMap = new HashMap<>();  // T如果是基础类型，会发生覆盖！
-    private int heapSize = 0;
+    private ArrayList<T> heap = new ArrayList<>();  // 存放堆元素的结构
+    private HashMap<T, Integer> indexMap = new HashMap<>();  // 元素在堆中的位置。T如果是基础类型，会发生覆盖！
+    private int heapSize = 0;  // 已添加多少堆元素
     private Comparator<? super T> comp;
 
     public HeapEnhance(Comparator<T> c) {
@@ -28,16 +29,16 @@ public class HeapEnhance<T> {
     public void push(T obj) {
         heap.add(obj);
         indexMap.put(obj, heapSize);
-        heapInsert(heapSize++);
+        insertHeapify(heapSize++);
     }
 
     public T pop() {
-        T obj = heap.get(0);
+        T root = heap.get(0);
         swap(0, --heapSize);
-        indexMap.remove(obj);
+        indexMap.remove(root);
         heap.remove(heapSize);
         heapify(0);
-        return obj;
+        return root;
 
     }
 
@@ -47,6 +48,14 @@ public class HeapEnhance<T> {
 
     public boolean contains(T obj) {
         return indexMap.containsKey(obj);
+    }
+
+    // 更新堆元素的属性
+    public void update(T obj, Consumer<? super T> action) {
+        if (indexMap.containsKey(obj)) {
+            action.accept(obj);
+            reHeapify(obj);
+        }
     }
 
     public boolean remove(T obj) {
@@ -60,13 +69,9 @@ public class HeapEnhance<T> {
         if (replace != obj) {
             heap.set(index, replace);
             indexMap.put(replace, index);
-            resign(index);
+            reHeapify(index);
         }
         return true;
-    }
-
-    public T get(int index) {
-        return heap.get(index);
     }
 
     public List<T> getAllElements() {
@@ -77,16 +82,16 @@ public class HeapEnhance<T> {
         return list;
     }
 
-    public void resign(T obj) {
-        resign(indexMap.get(obj));
+    public void reHeapify(T obj) {
+        reHeapify(indexMap.get(obj));
     }
 
-    private void resign(int index) {
-        heapInsert(index);
+    private void reHeapify(int index) {
+        insertHeapify(index);
         heapify(index);
     }
 
-    private void heapInsert(int index) {
+    private void insertHeapify(int index) {
         // 比父节点大则停、移动到0位置则停
         while (comp.compare(heap.get(index), heap.get((index - 1) / 2)) < 0) {  // index-1为负数时不能>>1只能/2
             swap(index, (index - 1) / 2);
@@ -96,7 +101,7 @@ public class HeapEnhance<T> {
 
     private void heapify(int index) {
         int left = (index << 1) + 1;
-        while (left < heapSize) {  // 先判断是否存在左孩子，后面得再判断是否存在右孩子!
+        while (left < heapSize) {  // 先判断是否存在左孩子，再判断是否存在右孩子！再在头左右节点选出最小节点
             int least = (left + 1 < heapSize) && comp.compare(heap.get(left + 1), heap.get(left)) < 0 ? left + 1 : left;
             least = comp.compare(heap.get(least), heap.get(index)) < 0 ? least : index;
             if (least == index) {
@@ -108,13 +113,15 @@ public class HeapEnhance<T> {
         }
     }
 
-    private void swap(int i, int j) {
-        T o1 = heap.get(i);
-        T o2 = heap.get(j);
-        heap.set(i, o2);
-        heap.set(j, o1);
-        indexMap.put(o2, i);
-        indexMap.put(o1, j);
+    private void swap(int i1, int i2) {
+        T o1 = heap.get(i1);
+        T o2 = heap.get(i2);
+        // 交换两个堆元素
+        heap.set(i1, o2);
+        heap.set(i2, o1);
+        // 更新位置索引
+        indexMap.put(o2, i1);
+        indexMap.put(o1, i2);
     }
 
 

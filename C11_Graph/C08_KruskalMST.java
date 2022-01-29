@@ -16,7 +16,7 @@ public class C08_KruskalMST {
         for (Edge edge : (HashSet<Edge>)graph.edges) {  // O(N*logN)
             minEdgeHeap.add(edge);
         }
-        // 先选权重小且其节点未连通的边
+        // 先选权重小且其节点未连通的边（贪心）
         while (!minEdgeHeap.isEmpty()) {
             Edge edge = minEdgeHeap.poll();
             if (!ufs.isSameSet(edge.from, edge.to)) {  // 若两节点已连通则舍弃该edge，否则会成环！
