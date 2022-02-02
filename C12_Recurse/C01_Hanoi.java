@@ -13,55 +13,6 @@ public class C01_Hanoi {
     }
 
     // 递归版本
-    public static void hanuoi(int n) {
-        move(n, "left", "right", "mid");
-    }
-    // 整体上看分3步，先移动topK个圆盘到无关塔，再把底下的圆盘移到目标塔，最后再把topK个圆盘移到目标塔。
-    private static void move(int n, String from, String to, String help) {
-        if (n == 1) {
-            System.out.printf("Move 1 from %s to %s.\n", from, to);
-            return;
-        }
-        int topK = n - 1;
-        move(topK, from, help, to);
-        System.out.printf("Move %d from %s to %s.\n", n, from, to);
-        move(topK, help, to, from);
-    }
-
-
-    // 迭代版本
-    private static class Record {
-        int n;
-        boolean canMove;
-        String from, to, help;
-        public Record(int _n, boolean _canMove, String _from, String _to, String _help) {
-            n = _n; canMove = _canMove; from = _from; to = _to; help = _help;
-        }
-    }
-    public static void hanoi3(int n) {
-        Stack<Record> stack = new Stack<>();
-        stack.push(new Record(n, false, "left", "right", "mid"));
-        while (!stack.isEmpty()) {
-            Record cur = stack.pop();
-            if (cur.n == 1) {
-                System.out.printf("Move 1 from %s to %s.\n", cur.from, cur.to);
-                if (!stack.isEmpty())
-                    stack.peek().canMove = true;
-            } else {
-                if (!cur.canMove) {
-                    stack.push(cur);
-                    stack.push(new Record(cur.n - 1, false, cur.from, cur.help, cur.to));
-                } else {
-                    System.out.printf("Move %d from %s to %s.\n", cur.n, cur.from, cur.to);
-                    stack.push(new Record(cur.n - 1, false, cur.help, cur.to, cur.from));
-                }
-            }
-        }
-    }
-
-
-
-    // 递归版本
     public static void hanoi2(int n) {
         left2right(n);
     }
@@ -130,5 +81,55 @@ public class C01_Hanoi {
         right2left(topK);
         System.out.printf("Move %d from right to mid.\n", n);
         left2mid(topK);
+    }
+
+
+
+    // 递归版本
+    public static void hanuoi(int n) {
+        move(n, "left", "right", "mid");
+    }
+    // 整体上看分3步，先移动topK个圆盘到无关塔，再把底下的圆盘移到目标塔，最后再把topK个圆盘移到目标塔。
+    private static void move(int n, String from, String to, String help) {
+        if (n == 1) {
+            System.out.printf("Move 1 from %s to %s.\n", from, to);
+            return;
+        }
+        int topK = n - 1;
+        move(topK, from, help, to);
+        System.out.printf("Move %d from %s to %s.\n", n, from, to);
+        move(topK, help, to, from);
+    }
+
+
+
+    // 迭代版本
+    private static class Record {
+        int n;
+        boolean canMove;
+        String from, to, help;
+        public Record(int _n, boolean _canMove, String _from, String _to, String _help) {
+            n = _n; canMove = _canMove; from = _from; to = _to; help = _help;
+        }
+    }
+    public static void hanoi3(int n) {
+        Stack<Record> stack = new Stack<>();
+        stack.push(new Record(n, false, "left", "right", "mid"));
+        while (!stack.isEmpty()) {
+            Record cur = stack.pop();
+            if (cur.n == 1) {
+                System.out.printf("Move 1 from %s to %s.\n", cur.from, cur.to);
+                if (!stack.isEmpty())
+                    stack.peek().canMove = true;
+            } else {
+                if (!cur.canMove) {
+                    stack.push(cur);
+                    stack.push(new Record(cur.n - 1, false, cur.from, cur.help, cur.to));
+                } else {
+                    System.out.printf("Move %d from %s to %s.\n", cur.n, cur.from, cur.to);
+                    stack.push(new Record(cur.n - 1, false, cur.help, cur.to, cur.from));
+                }
+            }
+        }
     }
 }
