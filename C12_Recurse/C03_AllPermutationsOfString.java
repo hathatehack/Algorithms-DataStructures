@@ -3,7 +3,7 @@ package C12_Recurse;
 import java.util.ArrayList;
 import java.util.List;
 
-// 打印给定字符串的全部排列组合，每个字符都要。
+// 打印给定字符串的全部排列组合，每个字符都要，顺序可变。
 public class C03_AllPermutationsOfString {
     public static void main(String[] args) {
         String test = "abc";

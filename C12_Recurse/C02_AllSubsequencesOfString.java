@@ -4,10 +4,10 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
-// 打印一个字符串的全部子序列，每个字符可选，位置可变。
+// 打印一个字符串的全部子序列，每个字符可选，相对顺序不可变。
 public class C02_AllSubsequencesOfString {
     public static void main(String[] args) {
-        String test = "abcdef";
+        String test = "abcd";
         List<String> ans1 = allSequences(test);
         List<String> ans2 = allSequences2(test);
         for (String s : ans1) System.out.printf("%s ", s);
@@ -34,6 +34,8 @@ public class C02_AllSubsequencesOfString {
         for (String s : ans4) System.out.printf("%s ", s);
     }
 
+
+
     // 自顶向下组合，二分
     public static List<String> allSequences(String string) {
         char[] str = string.toCharArray();
@@ -54,7 +56,6 @@ public class C02_AllSubsequencesOfString {
         // 含当前字符的path
         process(str, curIndex + 1, path + str[curIndex], all);
     }
-
 
 
 
