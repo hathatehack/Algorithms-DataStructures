@@ -1,21 +1,33 @@
 package C01_random;
 
 public class GenerateRandomStringArray {
-    public static String generateRandomString(int maxStrLen, int maxCharKind) {
+    public static String generateRandomString(int maxStrLen, int maxCharKind, char start) {
         char[] array = new char[(int) (Math.random() * maxStrLen) + 1];
         for (int i = 0; i < array.length; i++) {
             int value = (int) (Math.random() * maxCharKind);
-            array[i] = (char) ('a' + value);
+            array[i] = (char) (start + value);
         }
         return String.valueOf(array);
     }
 
-    public static String[] generateRandomStringArray(int maxSize, int maxStrLen, int maxCharKind) {
+    public static String generateRandomString(int maxStrLen, char start, char end) {
+        return generateRandomString(maxStrLen, end - start + 1, start);
+    }
+
+    public static String generateRandomString(int maxStrLen, int maxCharKind) {
+        return generateRandomString(maxStrLen, maxCharKind, 'a');
+    }
+
+    public static String[] generateRandomStringArray(int maxSize, int maxStrLen, int maxCharKind, char start) {
         String[] array = new String[(int) (Math.random() * maxSize) + 1];
         for (int i = 0; i < array.length; i++) {
-            array[i] = generateRandomString(maxStrLen, maxCharKind);
+            array[i] = generateRandomString(maxStrLen, maxCharKind, start);
         }
         return array;
+    }
+
+    public static String[] generateRandomStringArray(int maxSize, int maxStrLen, int maxCharKind) {
+        return generateRandomStringArray(maxSize, maxStrLen, maxCharKind, 'a');
     }
 
     public static String[] copyArray(String[] arr) {
