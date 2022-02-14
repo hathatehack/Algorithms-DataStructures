@@ -102,7 +102,7 @@ public class C01_MaxValueSumInBag {
     }
 
 
-    // 动态规划优化。位置依赖：上行依赖下行，同行内无依赖，可优化为复用两个一维数组进行交替更新。
+    // 动态规划优化。位置依赖：上行依赖下行，同行内无依赖，可优化为复用两个一维数组进行交替更新，减少空间占用。
     public static int maxValueSumInBag3_1(int[] weights, int[] values, int bag) {
         if (weights == null || values == null || weights.length != values.length || weights.length == 0 || bag < 0) {
             return 0;
