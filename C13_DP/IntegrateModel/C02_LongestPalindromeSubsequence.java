@@ -53,10 +53,6 @@ public class C02_LongestPalindromeSubsequence {
         }
         char[] chars1 = string.toCharArray();
         char[] chars2 = reverse(chars1);
-        return longestCommonSubsequence2(chars1, chars2);
-    }
-    // 返回chars1[0..i1]和chars2[0..i2]的最长公共子序列长度
-    private static int longestCommonSubsequence2(char[] chars1, char[] chars2) {
         int N1 = chars1.length;
         int N2 = chars2.length;
         int[][] dp = new int[N1][N2];

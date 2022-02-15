@@ -33,6 +33,9 @@ public class C02_LongestPalindromeSubsequence {
 
     // 动态规划
     public static int longestPalindromeSubsequence2(String string) {
+        if (string == null || string.length() == 0) {
+            return 0;
+        }
         char[] chars = string.toCharArray();
         int N = chars.length;
         int[][] dp = new int[N][N];
@@ -58,6 +61,9 @@ public class C02_LongestPalindromeSubsequence {
 
     // 动态规划优化。对于位置依赖：2+左下、左下、左、下，因为左会依赖左下，下也会依赖左下，所以单独左下可以不参与比较。
     public static int longestPalindromeSubsequence2_1(String string) {
+        if (string == null || string.length() == 0) {
+            return 0;
+        }
         char[] chars = string.toCharArray();
         int N = chars.length;
         int[][] dp = new int[N][N];
