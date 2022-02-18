@@ -2,7 +2,7 @@ package C01_random;
 
 public class GenerateRandomStringArray {
     public static String generateRandomString(int maxStrLen, int maxCharKind, char start) {
-        char[] array = new char[(int) (Math.random() * (maxStrLen + 1))];  // [0, maxStrLen]
+        char[] array = new char[(int)(Math.random() > 0.001 ? (Math.random() * maxStrLen + 1) : 0)];  // [0, maxStrLen]
         for (int i = 0; i < array.length; i++) {
             int value = (int) (Math.random() * maxCharKind);
             array[i] = (char) (start + value);
@@ -19,7 +19,7 @@ public class GenerateRandomStringArray {
     }
 
     public static String[] generateRandomStringArray(int maxSize, int maxStrLen, int maxCharKind, char start) {
-        String[] array = new String[(int) (Math.random() * (maxSize + 1))];  // [0, maxSize]
+        String[] array = new String[(int)(Math.random() > 0.001 ? (Math.random() * maxSize + 1) : 0)];  // [0, maxSize]
         for (int i = 0; i < array.length; i++) {
             array[i] = generateRandomString(maxStrLen, maxCharKind, start);
         }
