@@ -20,12 +20,12 @@ public class GenerateRandomArray {
         return array;
     }
 
-    static public int[] generateRandomArrayNonRepeat(int maxSize) {
-        int size = (int)(Math.random() * maxSize) + 1;
+    static public int[] generateRandomArrayNonRepeat(int maxSize, int minValue) {
+        int size = (int)(Math.random() > 0.001 ? (Math.random() * maxSize + 1) : 0);  // [0, maxSize]
         int[] array = new int[size];
         // 生成递增序列
         for (int i = 0; i < size; i++) {
-            array[i] = i;
+            array[i] = minValue++;
         }
         // 打乱顺序
         for (int i = 0; i < size; i++) {
@@ -37,8 +37,12 @@ public class GenerateRandomArray {
         return array;
     }
 
+    static public int[] generateRandomArrayNonRepeat(int maxSize) {
+        return generateRandomArrayNonRepeat(maxSize, 0);
+    }
+
     static public int[] generateRandomArrayPositive(int maxSize, int maxValue) {
-        int size = (int)(Math.random() * (maxSize + 1));  // [0, maxSize]
+        int size = (int)(Math.random() > 0.001 ? (Math.random() * maxSize + 1) : 0);  // [0, maxSize]
         int[] array = new int[size];
         for (int i = 0; i < size; i++) {
             array[i] = (int)(Math.random() * maxValue) + 1; // [1, maxValue]
@@ -47,7 +51,7 @@ public class GenerateRandomArray {
     }
 
     static public char[] generateRandomArrayChar(int maxSize, char start, char end) {
-        char[] array = new char[(int)(Math.random() * (maxSize + 1))];  // [0, maxSize]
+        char[] array = new char[(int)(Math.random() > 0.001 ? (Math.random() * maxSize + 1) : 0)];  // [0, maxSize]
         int range = end - start + 1;
         for (int i = 0; i < array.length; i++) {
             array[i] = (char)((int)(Math.random() * range) + start);  // [start, end]
