@@ -1,4 +1,4 @@
-package C13_DP.IntegrateModel;
+package C13_DP.C03_IntegrateModel;
 
 public class C07_SplitNumber {
     // 4的裂开方式有：1+1+1+1、1+1+2、1+3、2+2、4，要求后面的数不能比前面小，且分裂出的数大于0。给定一个正数N，返回N有多少种裂开方式。

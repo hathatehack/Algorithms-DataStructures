@@ -1,4 +1,4 @@
-package C13_DP.IntegrateModel;
+package C13_DP.C03_IntegrateModel;
 
 public class C04_HorseJump {
     // 给定一个10*9大小的象棋棋盘，“马”在起始位置[0,0]，“马”可以跳向8个方向的“日”对角，要求走K步最后落在[A,B]位置，返回有多少种走法。

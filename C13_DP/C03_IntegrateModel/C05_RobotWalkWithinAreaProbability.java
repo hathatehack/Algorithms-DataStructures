@@ -1,4 +1,4 @@
-package C13_DP.IntegrateModel;
+package C13_DP.C03_IntegrateModel;
 
 public class C05_RobotWalkWithinAreaProbability {
     // 给定正整数N、M、K、X、Y，表示机器人在[X,Y]位置，机器人可以向上下左右4个方向走，只要离开N*M区域直接死亡，最多走K步，返回机器人还在N*M区域的概率。

@@ -1,4 +1,4 @@
-package C13_DP.IntegrateModel;
+package C13_DP.C03_IntegrateModel;
 
 import C01_random.GenerateRandomStringArray;
 
@@ -93,7 +93,7 @@ public class C02_LongestPalindromeSubsequence {
             String string = GenerateRandomStringArray.generateRandomString(maxStrLen, maxCharKind);
             int ans1 = longestPalindromeSubsequence(string);
             int ans2 = longestPalindromeSubsequence2(string);
-            int ans2_1 = C13_DP.WindowModel.C02_LongestPalindromeSubsequence.longestPalindromeSubsequence2_1(string);
+            int ans2_1 = C13_DP.C02_WindowModel.C02_LongestPalindromeSubsequence.longestPalindromeSubsequence2_1(string);
             if (ans1 != ans2 || ans1 != ans2_1) {
                 System.err.printf("Oops! i=%d\n", i);
                 System.err.printf("ans1=%d, ans2=%d, ans2_1=%d   string: %s\n", ans1, ans2, ans2_1, string);

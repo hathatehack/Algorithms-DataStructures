@@ -1,4 +1,4 @@
-package C13_DP.WindowModel;
+package C13_DP.C02_WindowModel;
 
 import C01_random.GenerateRandomArray;
 

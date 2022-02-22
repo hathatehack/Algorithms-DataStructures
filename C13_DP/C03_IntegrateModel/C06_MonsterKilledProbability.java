@@ -1,4 +1,4 @@
-package C13_DP.IntegrateModel;
+package C13_DP.C03_IntegrateModel;
 
 public class C06_MonsterKilledProbability {
     // 给定3个正整数N、M、K，表示怪兽初始有N滴血，被攻击一次会随机流失0~M整数滴血，求K次攻击后怪兽死亡的概率。

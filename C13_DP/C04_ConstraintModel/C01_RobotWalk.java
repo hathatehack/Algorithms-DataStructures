@@ -1,4 +1,4 @@
-package C13_DP.ConstraintModel;
+package C13_DP.C04_ConstraintModel;
 
 public class C01_RobotWalk {
     // 假设有连续的1~N个位置（N>=2），如果机器人在1位置那么下一步只能往右去2位置，如果在N位置那么下一步只能往左去N-1位置，如果在中间位置则左右都可以走，
