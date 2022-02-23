@@ -5,23 +5,23 @@ import java.util.Queue;
 import java.util.Stack;
 
 public class C04_DoubleEndsQueue {
-    // 双向链表
-    static public class DoubleNode<T> {
-        public DoubleNode<T> pre;
-        public DoubleNode<T> next;
+    // 双向节点
+    static private class Node<T> {
+        public Node<T> pre;
+        public Node<T> next;
         public T value;
 
-        public DoubleNode(T val) {
+        public Node(T val) {
             value = val;
         }
     }
     // 双端队列
     static public class DoubleEndsQueue<T> {
-        DoubleNode<T> head;
-        DoubleNode<T> tail;
+        Node<T> head;
+        Node<T> tail;
 
-        public void addFromHead(T value) {
-            DoubleNode<T> cur = new DoubleNode<T>(value);
+        public void addToHead(T value) {
+            Node<T> cur = new Node<T>(value);
             if (head == null) {
                 head = cur;
                 tail = cur;
@@ -32,8 +32,8 @@ public class C04_DoubleEndsQueue {
             }
         }
 
-        public void addFromTail(T value) {
-            DoubleNode<T> cur = new DoubleNode<T>(value);
+        public void addToTail(T value) {
+            Node<T> cur = new Node<T>(value);
             if (tail == null) {
                 head = cur;
                 tail = cur;
@@ -48,7 +48,7 @@ public class C04_DoubleEndsQueue {
             if (head == null) {
                 return null;
             }
-            DoubleNode<T> cur = head;
+            Node<T> cur = head;
             if (head == tail) {
                 head = tail = null;
             } else {
@@ -63,7 +63,7 @@ public class C04_DoubleEndsQueue {
             if (tail == null) {
                 return null;
             }
-            DoubleNode<T> cur = tail;
+            Node<T> cur = tail;
             if (head == tail) {
                 head = tail = null;
             } else {
@@ -88,7 +88,7 @@ public class C04_DoubleEndsQueue {
         }
 
         public void push(T value) {
-            queue.addFromHead(value);
+            queue.addToHead(value);
         }
 
         public T pop() {
@@ -99,6 +99,7 @@ public class C04_DoubleEndsQueue {
             return queue.isEmpty();
         }
     }
+
     // 双向链表实现队列
     static public class MyQueue<T> {
         private DoubleEndsQueue<T> queue;
@@ -108,7 +109,7 @@ public class C04_DoubleEndsQueue {
         }
 
         public void push(T value) {
-            queue.addFromHead(value);
+            queue.addToHead(value);
         }
 
         public T poll() {
@@ -137,37 +138,39 @@ public class C04_DoubleEndsQueue {
     }
 
     static public void main(String[] args) {
-        int oneTestDataNum = 100;
-        int value = 10000;
         int testTimes = 100000;
+        int value = 10000;
         for (int i = 0; i < testTimes; i++) {
             MyStack<Integer> myStack = new MyStack<>();
             MyQueue<Integer> myQueue = new MyQueue<>();
             Stack<Integer> stack = new Stack<>();
             Queue<Integer> queue = new LinkedList<>();
-            for (int j = 0; j < oneTestDataNum; j++) {
-                int nums = (int) (Math.random() * value);
+            int val;
+            for (int tries = 100; tries > 0; tries--) {
+                // 测试栈
+                val = (int) (Math.random() * value);
                 if (stack.isEmpty()) {
-                    myStack.push(nums);
-                    stack.push(nums);
+                    myStack.push(val);
+                    stack.push(val);
                 } else {
                     if (Math.random() < 0.5) {
-                        myStack.push(nums);
-                        stack.push(nums);
+                        myStack.push(val);
+                        stack.push(val);
                     } else {
                         if (!isEqual(myStack.pop(), stack.pop())) {
                             System.out.println("oops!");
                         }
                     }
                 }
-                int numq = (int) (Math.random() * value);
+                // 测试队列
+                val = (int) (Math.random() * value);
                 if (queue.isEmpty()) {
-                    myQueue.push(numq);
-                    queue.offer(numq);
+                    myQueue.push(val);
+                    queue.offer(val);
                 } else {
                     if (Math.random() < 0.5) {
-                        myQueue.push(numq);
-                        queue.offer(numq);
+                        myQueue.push(val);
+                        queue.offer(val);
                     } else {
                         if (!isEqual(myQueue.poll(), queue.poll())) {
                             System.out.println("oops!");
