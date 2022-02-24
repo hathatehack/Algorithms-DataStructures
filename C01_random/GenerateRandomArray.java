@@ -225,6 +225,16 @@ public class GenerateRandomArray {
         System.out.println();
     }
 
+    public static void printArray(Object[] arr) {
+        if (arr == null) {
+            return;
+        }
+        for (int i = 0; i < arr.length; i++) {
+            System.out.format("%s, ", arr[i]);
+        }
+        System.out.println();
+    }
+
     public static void printArray(int[][] arr) {
         if (arr == null) {
             return;
